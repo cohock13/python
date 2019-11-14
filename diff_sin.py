@@ -33,6 +33,6 @@ for a in range(RANGE):
 	ttl = plt.text(6, 1, s, horizontalalignment='center', verticalalignment='bottom',fontsize=13)
 	ims.append([im1, im2,ttl])
  
-ani = animation.ArtistAnimation(fig, ims, interval=1, repeat=False)
-plt.show()
-##ani.save('diff_sin.mp4', writer='ffmpeg')
+ani = animation.ArtistAnimation(fig, ims, interval=10, repeat=False)
+##plt.show()
+ani.save('diff_sin.mp4', writer='ffmpeg')
