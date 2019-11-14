@@ -24,7 +24,7 @@ python diff_sin.py
 python MonteCarlo.py
 ```
 　機械学習のほうのモンテカルロ法ではないです.
-  実行に時間が20分近くかかりますのでご注意ください.
+  プロット数が多い(1000くらい)と実行に時間が20分近くかかりますのでご注意ください.
   ![Monte](https://user-images.githubusercontent.com/55901554/68839989-25e1b000-0705-11ea-8ac9-c9219154aa2f.gif)
  
 # 3.x^n+y^n=1のnによる変化
