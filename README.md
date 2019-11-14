@@ -1,6 +1,7 @@
 # python
 pythonで作成した数学,物理系のgif,mp4動画,およびソースコードです.(2019/11/14最終アップロード)
 手元で動かす場合にはnumpy,matplotlibが必要です.また,mp4の出力にはffmpeg,gifの出力にはImageMagickが必要です.
+
 ffmpegで出力する場合
 ```bash
 import ffmpeg 
