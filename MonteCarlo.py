@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import ffmpeg
 
-
+##プロット数
 N = 100
 
 fig = plt.figure()
@@ -19,7 +19,6 @@ inside_x = inside_y = outside_x = outside_y = np.array([])
 
 count_i = 0
 count_o = 0
-
 
 
 for a in range (N):
@@ -61,6 +60,6 @@ for a in range (N):
     text_2 = plt.text(N/2, 3.75, o, horizontalalignment='center', verticalalignment='bottom',fontsize=12)
     ims.append([plt_1,plt_2,text_1,plt_4,text_2])
 
-ani = animation.ArtistAnimation(fig, ims, interval=20)
-##ani.save('Monte.mp4', writer='ffmpeg')
-plt.show()
+ani = animation.ArtistAnimation(fig, ims, interval=50)
+ani.save('Monte.gif', writer='ImageMagick')
+##plt.show()
