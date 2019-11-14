@@ -17,7 +17,7 @@ python diff_sin.py
 ```
  オイラー法によって解を計算しています.
  初期値が安定点と不安定点によってジャンプ的な変化をします.
-
+![diff_sin](https://user-images.githubusercontent.com/55901554/68840613-6aba1680-0706-11ea-8228-c47fd5fa15b4.gif)
  
 # 2.モンテカルロ法による円周率の算出
 ```bash
