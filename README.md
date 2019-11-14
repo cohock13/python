@@ -24,6 +24,8 @@ python diff_sin.py
 python MonteCarlo.py
 ```
 　機械学習のほうのモンテカルロ法ではないです.
+  実行に時間が20分近くかかりますのでご注意ください.
+ 
  
 # 3.x^n+y^n=1のnによる変化
 ```bash
