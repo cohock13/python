@@ -12,7 +12,7 @@ gifで出力する場合
 ani.save("hoge.gif",writer="ImageMagick")
 ```
 追記
-matplotlibのバージョンによってはImageMagickが無くても```bash ani.save("hoge.gif")```でgif形式で保存できるみたいです.
+matplotlibのバージョンによってはImageMagickが無くても```ani.save("hoge.gif")```でgif形式で保存できるみたいです.
 # 1. dx/dt=sin(x)の初期値による解曲線の変化
 ```bash
 python diff_sin.py
