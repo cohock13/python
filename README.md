@@ -42,6 +42,8 @@ python hysteresis.py
 ```
 
 強誘電体
+
+
 ![hysteresis_fer](https://user-images.githubusercontent.com/55901554/74263745-c1091680-4d42-11ea-8af8-5bf6fd2b1377.gif)
 
 
