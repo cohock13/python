@@ -1,18 +1,22 @@
 # python
 pythonで作成した数学,物理系のgif,mp4動画,およびソースコードです.(2019/11/14最終アップロード)
-手元で動かす場合にはnumpy,matplotlibが必要です.また,mp4の出力にはffmpeg,gifの出力にはImageMagickが必要です.
+手元で動かす場合にはnumpy,matplotlibが必要です.また,mp4の出力にはffmpeg,gifの出力にはImageMagickかmatplotlibが必要です.
 
-ffmpegで出力する場合
+mp4で出力する場合
 ```bash
 import ffmpeg 
 ani.save("hoge.mp4",writer="ffmpeg")
 ```
 gifで出力する場合
 ```bash
-ani.save("hoge.gif",writer="ImageMagick")
+ani.save("hoge.gif",writer="imagemagick")
 ```
-追記
-matplotlibのバージョンによってはImageMagickが無くても```ani.save("hoge.gif")```でgif形式で保存できるみたいです.
+imagemagickがない場合は
+```bash
+ani.save("hoge.gif",writer="pillow")
+```
+でもできます.
+
 # 1. dx/dt=sin(x)の初期値による解曲線の変化
 ```bash
 python diff_sin.py
