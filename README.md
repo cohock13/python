@@ -40,8 +40,14 @@ python circle.py
 ```bash
 python hysteresis.py
 ```
+
 強誘電体
 ![hysteresis_fer](https://user-images.githubusercontent.com/55901554/74263745-c1091680-4d42-11ea-8af8-5bf6fd2b1377.gif)
+
+
 常誘電体
+
 ![hysteresis_para](https://user-images.githubusercontent.com/55901554/74263806-d8e09a80-4d42-11ea-9ee7-ac259159893d.gif)
+
+
 　学生実験の発表で使用した,強誘電体と常誘電体のヒステリシスループのシミュレーションです.強誘電体のほうは本来シグモイド関数のような遷移をするので関数の形は厳密に正しくはないです.
