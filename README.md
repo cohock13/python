@@ -61,8 +61,8 @@ python hysteresis.py
  
  # 5.確率感染モデルとロジスティック方程式
  ```bash
-python MonteCarlo.py
+python logistic.py
 ```
-隣接している個体に確率で感染するような環境で,その個体数がロジスティック方程式と呼ばれる方程式の解に沿って増加する様子をシミュレーションしています.
- matplotlib,numpy,tqdmが必要です.<br>
+隣接している個体に確率で感染するような環境で,その個体数がロジスティック方程式と呼ばれる方程式の解に沿って増加する様子をシミュレーションしています.(未完成)
+<br>matplotlib,numpy,tqdmが必要です.<br>
  あとでgithub.ioにてp5.jsを使ってwebシミュレーションができるようにする予定...
