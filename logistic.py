@@ -42,7 +42,7 @@ for t in tqdm(range(MAX_TIME)):
                         N_infected += 1
                 ##感染した個体について、一定確率で治癒し、二度と感染しない
                 tmp_rand_heal = random.random()
-                if tmp_rand_heal < P_HEAL:
+                if tmp_rand_heal < P_HEAL and N_infected != 1:
                     model[i][j] = 2
                     N_healed += 1
                     ##N_infected -= 1
