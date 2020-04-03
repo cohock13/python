@@ -9,8 +9,8 @@ from tqdm import tqdm
 変数
 """
 MAX_TIME = 1000##シミュレーションの最大時
-P_INFECTION = 0.001##感染確率
-P_HEAL = 0.001##治癒確率
+P_INFECTION = 0.005##感染確率
+P_HEAL = 0.005##治癒確率
 
 
 print("Enter N:",end=" ")
@@ -80,13 +80,13 @@ for t in tqdm(range(MAX_TIME)):
         labelleft=False,
         labelright=False,
         labeltop=False)
-    plt.title("B:healthy,R:infected,G:healed")
+    plt.title("Green:healthy,Red:infected,Gray:healed")
     plt_1 = plt.scatter(healthy_graph_x,healthy_graph_y,color="blue", s = 50)
     plt_2 = plt.scatter(infected_graph_x,infected_graph_y, color="red", s = 50)
     plt_3 = plt.scatter(healed_graph_x,healed_graph_y,color="gray",s = 50)
     
     plt.subplot(1,2,2)
-    plt.title("Numbers")
+    plt.title("Green:healthy,Red:infected,Gray:healed")
     plt.xlabel("times")
     times = np.array([i for i in range(t)])
     N_fill = np.array([N**2 for i in range(t)])
