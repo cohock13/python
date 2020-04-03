@@ -1,21 +1,7 @@
 # python
 pythonで作成した数学,物理系のgif,mp4動画,およびソースコードです.(2019/11/14最終アップロード)
-手元で動かす場合にはnumpy,matplotlibが必要です.また,mp4の出力にはffmpeg,gifの出力にはImageMagickかmatplotlibが必要です.
+手元で動かす場合にはnumpy,matplotlibが必要です.
 
-mp4で出力する場合
-```bash
-import ffmpeg 
-ani.save("hoge.mp4",writer="ffmpeg")
-```
-gifで出力する場合
-```bash
-ani.save("hoge.gif",writer="imagemagick")
-```
-imagemagickがない場合は
-```bash
-ani.save("hoge.gif",writer="pillow")
-```
-でもできます.
 
 # 1. dx/dt=sin(x)の初期値による解曲線の変化
 ```bash
@@ -59,10 +45,14 @@ python hysteresis.py
 　学生実験の発表で使用した,強誘電体と常誘電体のヒステリシスループのシミュレーションです.強誘電体のほうは本来シグモイド関数のような遷移をするので関数の形は厳密に正しくはないです.
  
  
- # 5.確率感染モデルとロジスティック方程式
+ # 5.確率感染モデル
  ```bash
 python logistic.py
 ```
-隣接している個体に確率で感染するような環境で,その個体数がロジスティック方程式と呼ばれる方程式の解に沿って増加する様子をシミュレーションしています.(未完成)
+
+![log](https://user-images.githubusercontent.com/55901554/78390858-3f39b900-7620-11ea-8807-26bf24c05896.gif)
+
+隣接した個体に確率pで感染し,そのあと確率qで治癒してもう感染しないようになるモデルです.<br>
+個体数の平方根を入力し,アニメーションが出力されます.入力値は10から30くらいの間にしてください.
 <br>matplotlib,numpy,tqdmが必要です.<br>
  あとでgithub.ioにてp5.jsを使ってwebシミュレーションができるようにする予定...
