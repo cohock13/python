@@ -81,9 +81,9 @@ for t in tqdm(range(MAX_TIME)):
         labelright=False,
         labeltop=False)
     plt.title("Green:healthy,Red:infected,Gray:healed")
-    plt_1 = plt.scatter(healthy_graph_x,healthy_graph_y,color="blue", s = 50)
-    plt_2 = plt.scatter(infected_graph_x,infected_graph_y, color="red", s = 50)
-    plt_3 = plt.scatter(healed_graph_x,healed_graph_y,color="gray",s = 50)
+    plt_1 = plt.scatter(healthy_graph_x,healthy_graph_y,color="limegreen", s = 50)
+    plt_2 = plt.scatter(infected_graph_x,infected_graph_y, color="tomato", s = 50)
+    plt_3 = plt.scatter(healed_graph_x,healed_graph_y,color="dimgray",s = 50)
     
     plt.subplot(1,2,2)
     plt.title("Green:healthy,Red:infected,Gray:healed")
