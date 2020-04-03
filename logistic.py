@@ -17,7 +17,7 @@ print("Enter N(10<=N<=30):",end=" ")
 N = int(input())
 if N > 30:
     print(":(")
-    break
+    exit()
 
 fig = plt.figure()
 ims = []
@@ -100,9 +100,9 @@ for t in tqdm(range(MAX_TIME)):
     
     ims.append([plt_1,plt_2,plt_3,fill,plt_4,plt_5])
 
-ani = animation.ArtistAnimation(fig,ims,interval=10,repeat=True,blit=True)
-##ani.save("test.mp4",writer="pillow")
-plt.show()
+ani = animation.ArtistAnimation(fig,ims,interval=10,repeat=False)
+ani.save("log.mp4")
+##plt.show()
 
 
 
