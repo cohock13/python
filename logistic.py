@@ -1,55 +1,108 @@
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib.colors import ListedColormap
 import numpy as np 
 import random
+import ffmpeg
 from tqdm import tqdm
 
-def graph(N):
-    MAX_TIME = 3000##シミュレーションの最大時間
-    THRESHOLD = 0.005##感染確率　この場合0.01%
-    if N < 10:
-        print("Please Enter Some Number Over 10.")
-        return
-    else:
-        model = [[0 for i in range(N)] for j in range(N)]
-        time_list = []
-        infected = [0 for i in range(MAX_TIME)]
-        model[N//2][N//2] = 1
-        count = 1
-        time = 0
-        x_0 = 0
-        dxdy = [[1,0],[0,1],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]]##周囲の8方向へ感染
-        for t in tqdm(range(MAX_TIME)):##計算量O(MAX_TIME*N^2)ただappendのせいもあり重い?
-            for i in range(N):
-                for j in range(N):
-                    if model[i][j] == 1:
-                        for dx,dy in dxdy:
-                            x = i + dx
-                            y = j + dy
-                            tmp_rand = random.random()
-                            if 0<=x<N and 0<=y<N and tmp_rand<THRESHOLD and model[x][y] == 0:
-                                model[x][y] = 1
-                                count += 1
-                                if count == (N**2)//2:
-                                    x_0 = t
-            infected[t] = count
-        print("x_0",x_0)
-        time = np.linspace(0,MAX_TIME,MAX_TIME)
-        infected = np.array(infected)
-        plt.plot(time,infected,label="stochastic")
-        logistic = (N**2)/(1+(N**2-1)*np.exp(-THRESHOLD*(time)))
-        plt.plot(time,logistic,label="logistic")
-        plt.legend(loc="best",shadow=True)
-        plt.xlabel("time")
-        plt.xlim(0,MAX_TIME)
-        plt.ylabel("Infected[percent]")
-        ##plt.ylim(0,105)
-        plt.show()
+"""
+変数
+"""
+MAX_TIME = 1000##シミュレーションの最大時
+P_INFECTION = 0.001##感染確率
+P_HEAL = 0.001##治癒確率
 
-        return
 
-if __name__ == "__main__":
-    print("enter N :",end="")
-    N = int(input())
-    graph(N)
+print("Enter N:",end=" ")
+N = int(input())
+
+fig = plt.figure()
+ims = []
+
+        
+model = [[0 for i in range(N)] for j in range(N)]
+infected = [0 for i in range(MAX_TIME)]
+healed = [0 for i in range(MAX_TIME)]
+model[N//2][N//2] = 1
+N_infected = 1
+N_healed = 0
+
+dxdy = [[1,0],[0,1],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]]##周囲の8方向へ感染
+for t in tqdm(range(MAX_TIME)):
+    ##隣接した個体に感染する
+    for i in range(N):
+        for j in range(N):
+            if model[i][j] == 1:
+                for dx,dy in dxdy:
+                    x = i + dx
+                    y = j + dy
+                    tmp_rand_infection = random.random()
+                    if 0<=x<N and 0<=y<N and tmp_rand_infection<P_INFECTION and model[x][y] == 0:
+                        model[x][y] = 1
+                        N_infected += 1
+                ##感染した個体について、一定確率で治癒し、二度と感染しない
+                tmp_rand_heal = random.random()
+                if tmp_rand_heal < P_HEAL:
+                    model[i][j] = 2
+                    N_healed += 1
+                    ##N_infected -= 1
+                            
+    infected[t] = N_infected
+    healed[t] = N_healed
+    
+    healthy_graph_x = []
+    healthy_graph_y = []
+    infected_graph_x = []
+    infected_graph_y = []
+    healed_graph_x = []
+    healed_graph_y = []
+    for i in range(N):
+        for j in range(N):
+            if model[i][j] == 0:
+                healthy_graph_x.append(i)
+                healthy_graph_y.append(j)
+            elif model[i][j] == 1:
+                infected_graph_x.append(i)
+                infected_graph_y.append(j)
+            else:##model[i][j] == 2
+                healed_graph_x.append(i)
+                healed_graph_y.append(j)
+            
+    healthy_graph_x = np.array(healthy_graph_x)
+    healthy_graph_y = np.array(healthy_graph_y)
+    infected_graph_x = np.array(infected_graph_x)
+    infected_graph_y = np.array(infected_graph_y)
+    healed_graph_x = np.array(healed_graph_x)
+    healed_graph_y = np.array(healed_graph_y)
+    
+    plt.subplot(1,2,1)
+    plt.tick_params(labelbottom=False,
+        labelleft=False,
+        labelright=False,
+        labeltop=False)
+    plt.title("B:healthy,R:infected,G:healed")
+    plt_1 = plt.scatter(healthy_graph_x,healthy_graph_y,color="blue", s = 50)
+    plt_2 = plt.scatter(infected_graph_x,infected_graph_y, color="red", s = 50)
+    plt_3 = plt.scatter(healed_graph_x,healed_graph_y,color="gray",s = 50)
+    
+    plt.subplot(1,2,2)
+    plt.title("Numbers")
+    plt.xlabel("times")
+    times = np.array([i for i in range(t)])
+    N_fill = np.array([N**2 for i in range(t)])
+    fill = plt.fill_between(times,N_fill,color="limegreen")
+    infected_nums = np.array(infected[:t])
+    healed_nums = np.array(healed[:t])
+    plt_4 = plt.fill_between(times,infected_nums,color="tomato")
+    plt_5 = plt.fill_between(times,healed_nums,color="dimgray")
+    
+    ims.append([plt_1,plt_2,plt_3,fill,plt_4,plt_5])
+
+ani = animation.ArtistAnimation(fig,ims,interval=10,repeat=True,blit=True)
+##ani.save("test.mp4",writer="pillow")
+plt.show()
+
+
 
 
