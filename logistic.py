@@ -3,7 +3,6 @@ import matplotlib.animation as animation
 from matplotlib.colors import ListedColormap
 import numpy as np 
 import random
-import ffmpeg
 from tqdm import tqdm
 
 """
