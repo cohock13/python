@@ -13,8 +13,11 @@ P_INFECTION = 0.005##感染確率
 P_HEAL = 0.005##治癒確率
 
 
-print("Enter N:",end=" ")
+print("Enter N(10<=N<=30):",end=" ")
 N = int(input())
+if N > 30:
+    print(":(")
+    break
 
 fig = plt.figure()
 ims = []
@@ -86,7 +89,6 @@ for t in tqdm(range(MAX_TIME)):
     plt_3 = plt.scatter(healed_graph_x,healed_graph_y,color="dimgray",s = 50)
     
     plt.subplot(1,2,2)
-    plt.title("Green:healthy,Red:infected,Gray:healed")
     plt.xlabel("times")
     times = np.array([i for i in range(t)])
     N_fill = np.array([N**2 for i in range(t)])
