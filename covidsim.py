@@ -13,22 +13,22 @@ class Cell(object):
     #感染半径
     R = 1.0
     #感染確率
-    INF_RATE = 0.05
+    INF_RATE = 0.9
     #回復率
-    RECOV_RATE = 0.3
+    RECOV_RATE = 0.02
     #死亡率
-    DEATH_RATE = 0.0002
+    DEATH_RATE = 0.002
 
     def __init__(self,state:State,vel:tuple,bounding:tuple):
         super().__init__()
-        self.pos = tuple(map(uniform,bounding))
+        self.pos = uniform(*(bounding[0])),uniform(*(bounding[1]))
         self.vel = vel
         self.bounding = bounding
         self.state = state
         self._next_state_ = state
 
     #感染判定
-    def infection(self,cell:Cell)->bool:
+    def infection(self,cell)->bool:
         #相手が感染済みでないなら処理無し
         if cell.state != State.Infected:
             return False
@@ -38,7 +38,7 @@ class Cell(object):
             d = math.dist(self.pos,cell.pos)
             p = random()
             if d<Cell.R and p<Cell.INF_RATE:
-                self.nextstate = State.Infected
+                self._next_state_ = State.Infected
                 return True
         
         return False
@@ -62,11 +62,16 @@ class Cell(object):
             return True
 
         return False
-    def update(self):
-        self.update_pos()
-        state = self.update_state()
-        return state
 
+    def update(self):
+        pos = self.update_pos()
+        state = self.update_state()
+        return pos,state
+
+    #移動速度の変更
+    def update_vel(self):
+        if self.state == State.Dead:
+            self.vel = 0.0,0.0
     #位置の移動
     def update_pos(self)->tuple:
         #内部存在判定関数
@@ -85,7 +90,7 @@ class Cell(object):
                     return vmin
                 if vmax < value:
                     return vmax
-            self.pos = tuple(map(_clmp_,zip(self.pos,self.bounding)))
+            self.pos = tuple(map(lambda x: _clmp_(x[0],x[1]),zip(self.pos,self.bounding)))
         
         x,y = self.pos
         vx,vy = self.vel
@@ -121,7 +126,7 @@ class Simulator(object):
         if bounding is None:
             bounding = self.maxbounding
 
-        self.cells.append(Cell(vel,bounding,state))
+        self.cells.append(Cell(state,vel,bounding))
 
     def add_cells(self,num:int,staterate:float,v:float,maxboundlen=None,minv=None):
         if maxboundlen is None or self.boundlength<maxboundlen:
@@ -142,8 +147,8 @@ class Simulator(object):
 
             #移動範囲(boundingbox)計算
             xmin,ymin = tuple(
-                map(lambda a:uniform(a[0],a[1]-maxboundlen)),
-                self.maxbounding)
+                map(lambda a:uniform(a[0],a[1]-maxboundlen),
+                self.maxbounding))
             bounding = (xmin,xmin+maxboundlen),(ymin,ymin+maxboundlen)
             return vel,bounding
         
@@ -162,8 +167,10 @@ class Simulator(object):
     def step(self):
         #感染判定
         for c in self.cells:
-            map(c.infection,self.cells)
+            for e in self.cells:
+                c.infection(e)
         #回復判定, 移動処理
         for c in self.cells:
             c.recovery()
             c.update()
+            
