@@ -97,7 +97,7 @@ class Cell(object):
         self.pos = x+vx,y+vy
             
         #移動方向の反転判定
-        x_unbound,y_unbound = is_unbounded(x,y)
+        x_unbound,y_unbound = is_unbounded(*self.pos)
         if x_unbound and y_unbound:
             self.vel = -vx,-vy
         if x_unbound:
@@ -161,8 +161,11 @@ class Simulator(object):
             self.add_cell(State.Normal,*calc_arg())
 
     def simulate(self,maxstep = 1000):
+        simulate = []
         for _ in range(maxstep):
-            self.step()
+            t = self.step()
+            simulate.append(t)
+        return simulate
 
     def step(self):
         #感染判定
@@ -170,7 +173,10 @@ class Simulator(object):
             for e in self.cells:
                 c.infection(e)
         #回復判定, 移動処理
+        step =[]
         for c in self.cells:
             c.recovery()
-            c.update()
+            t = c.update()
+            step.append(t)
+        return step
             
