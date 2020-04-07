@@ -1,5 +1,5 @@
 import math
-from typing import List
+from typing import List,Tuple
 from random import random,uniform
 from enum import Enum,auto
 
@@ -15,7 +15,7 @@ class Cell(object):
     #感染確率
     INF_RATE = 0.9
     #回復率
-    RECOV_RATE = 0.02
+    RECOV_RATE = 0.002
     #死亡率
     DEATH_RATE = 0.002
 
@@ -64,6 +64,7 @@ class Cell(object):
         return False
 
     def update(self):
+        self.update_vel()
         pos = self.update_pos()
         state = self.update_state()
         return pos,state
@@ -77,7 +78,7 @@ class Cell(object):
         #内部存在判定関数
         def is_unbounded(x,y):
             (xmin,xmax),(ymin,ymax) = self.bounding
-            return not xmin<=x<=xmax,not ymin<=y<=ymax
+            return not (xmin<=x<=xmax),not (ymin<=y<=ymax)
         
         #範囲内への丸め込み関数
         def clamp():
@@ -165,9 +166,13 @@ class Simulator(object):
         for _ in range(maxstep):
             t = self.step()
             simulate.append(t)
+
+            if len([t_i for t_i in t if t_i[1]==State.Infected])==0:
+                break
+
         return simulate
 
-    def step(self):
+    def step(self)->List[Tuple[Tuple,State]]:
         #感染判定
         for c in self.cells:
             for e in self.cells:
@@ -179,4 +184,5 @@ class Simulator(object):
             t = c.update()
             step.append(t)
         return step
+            
             
